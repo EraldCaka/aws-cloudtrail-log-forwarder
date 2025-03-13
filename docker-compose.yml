@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend-network
+
+  s3:
+    image: minio/minio
+    container_name: s3
+    environment:
+      - MINIO_ACCESS_KEY=minioaccesskey
+      - MINIO_SECRET_KEY=miniosecretkey
+    volumes:
+      - s3-data:/data
+    ports:
+      - "9000:9000"
+    command: server /data
+    networks:
+      - backend-network
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    environment:
+      - SERVICES=cloudtrail,s3
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DEFAULT_REGION=us-east-1
+    ports:
+      - "4566:4566"
+    networks:
+      - backend-network
+
+volumes:
+  mongo-data:
+  s3-data:
+
+networks:
+  backend-network:
+    driver: bridge
