@@ -84,15 +84,14 @@ When adding a source using the `POST /sources` endpoint, the following JSON form
 
 ```json
 {
-  "id": "source1",
-  "sourceType": "AWS",
-  "accessKeyId": "AKIA...",
-  "secretAccessKey": "SECRET...",
-  "region": "us-east-1",
-  "logFetchInterval": 10,
-  "callbackUrl": "https://example.com/callback",
-  "s3Bucket": "bucket-name",
-  "s3Prefix": "logs/"
+  "sourceType": "cloudtrail",
+  "accessKeyId": "test",
+  "secretAccessKey": "test",
+  "region": "us-west-2",
+  "logFetchInterval": 15,
+  "callbackUrl": "http://localhost:8080/webhook",
+  "s3Bucket": "logsBuckTest",
+  "s3Prefix": "AWSLogs/"
 }
 ```
 
