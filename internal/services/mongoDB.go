@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -81,16 +80,4 @@ func (m *MongoService) RemoveSource(id string) error {
 		return fmt.Errorf("failed to remove source: %v", err)
 	}
 	return nil
-}
-
-func (m *MongoService) InsertDocument(collectionName string, document interface{}) (interface{}, error) {
-	collection := m.database.Collection(collectionName)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	result, err := collection.InsertOne(ctx, document)
-	if err != nil {
-		return nil, fmt.Errorf("failed to insert document: %v", err)
-	}
-	return result.InsertedID, nil
 }
