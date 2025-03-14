@@ -16,7 +16,7 @@ func main() {
 	redisService := services.NewRedisService()
 	awsService, err := services.NewAWSService(envData.AccessKey, envData.SecretKey)
 	if err != nil {
-		log.Fatalf("❌ Failed to initialize AWS service: %v", err)
+		log.Fatalf("Failed to initialize AWS service: %v", err)
 	}
 	mongoService, err := services.NewMongoService(envData.MongoDbCon, "cloudtrail_logs")
 	if err != nil {
