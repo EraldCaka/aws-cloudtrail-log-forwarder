@@ -27,7 +27,7 @@ func NewHandler(redis *services.RedisService, aws *services.AWSService, mongo *s
 func (h *Handler) GetSources(c *fiber.Ctx) error {
 	sources, err := h.mongo.GetSources()
 	if err != nil {
-		log.Printf("❌ Error fetching sources: %v", err)
+		log.Printf("Error fetching sources: %v", err)
 		return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Error fetching sources: %v", err))
 	}
 
@@ -38,17 +38,17 @@ func (h *Handler) GetSources(c *fiber.Ctx) error {
 func (h *Handler) AddSource(c *fiber.Ctx) error {
 	var source services.Source
 	if err := c.BodyParser(&source); err != nil {
-		log.Printf("❌ Invalid source data: %v", err)
+		log.Printf("Invalid source data: %v", err)
 		return c.Status(fiber.StatusBadRequest).SendString(fmt.Sprintf("Invalid source data: %v", err))
 	}
 
 	err := h.mongo.InsertSource(source)
 	if err != nil {
-		log.Printf("❌ Error inserting source: %v", err)
+		log.Printf("Error inserting source: %v", err)
 		return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Error inserting source: %v", err))
 	}
 
-	log.Printf("✅ Source added successfully: %v", source)
+	log.Printf("Source added successfully: %v", source)
 	return c.Status(fiber.StatusCreated).SendString("Source added successfully")
 }
 
@@ -57,10 +57,10 @@ func (h *Handler) DeleteSource(c *fiber.Ctx) error {
 
 	err := h.mongo.RemoveSource(sourceID)
 	if err != nil {
-		log.Printf("❌ Error deleting source with ID %s: %v", sourceID, err)
+		log.Printf("Error deleting source with ID %s: %v", sourceID, err)
 		return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Error deleting source: %v", err))
 	}
 
-	log.Printf("✅ Source with ID %s deleted successfully.", sourceID)
+	log.Printf("Source with ID %s deleted successfully.", sourceID)
 	return c.Status(fiber.StatusOK).SendString("Source deleted successfully")
 }
