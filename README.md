@@ -99,19 +99,5 @@ When adding a source using the `POST /sources` endpoint, the following JSON form
 
 You can monitor the logs in the terminal or configure them to be stored in MongoDB for later retrieval. Logs are stored with metadata like `eventId`, `eventName`, and `eventTime` for later analysis.
 
-## Dependencies
 
-The following dependencies are used in the project:
 
-- **Fiber**: Fast and lightweight web framework for Go.
-- **AWS SDK**: For interacting with AWS CloudTrail.
-- **MongoDB**: For storing log data and sources.
-- **Redis**: For caching and task queuing.
-- **Golang**: The programming language used for the entire backend.
-
-## Future Improvements
-
-- Add authentication and authorization for API access.
-- Provide more configurable webhook features (retry mechanisms, headers, etc.).
-- Introduce more AWS service integrations (e.g., AWS Lambda, S3) for enhanced log handling.
-- Improve logging and error handling for better observability.
