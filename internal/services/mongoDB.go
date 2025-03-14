@@ -14,21 +14,16 @@ type MongoService struct {
 	client   *mongo.Client
 	database *mongo.Database
 }
-
 type Source struct {
 	ID               string `json:"id"`
 	SourceType       string `json:"sourceType"`
-	Credentials      Credentials
+	AccessKeyId      string `json:"accessKeyId"`
+	SecretAccessKey  string `json:"secretAccessKey"`
+	Region           string `json:"region"`
 	LogFetchInterval int    `json:"logFetchInterval"`
 	CallbackURL      string `json:"callbackUrl"`
 	S3Bucket         string `json:"s3Bucket"`
 	S3Prefix         string `json:"s3Prefix"`
-}
-
-type Credentials struct {
-	AccessKeyId     string `json:"accessKeyId"`
-	SecretAccessKey string `json:"secretAccessKey"`
-	Region          string `json:"region"`
 }
 
 func NewMongoService(uri, dbName string) (*MongoService, error) {

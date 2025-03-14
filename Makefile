@@ -14,4 +14,7 @@ stop:
 	docker-compose stop
 
 run:
-	@go run cmd/main.go
+	@go run cmd/server/main.go
+
+webhook:
+	@go run cmd/webhook/main.go

@@ -40,7 +40,6 @@ func NewRedisService() *RedisService {
 	)
 
 	mux := asynq.NewServeMux()
-	//	mux.HandleFunc("send_email", handleSendEmailTask)
 
 	go func() {
 		if err := worker.Run(mux); err != nil {
@@ -98,8 +97,3 @@ func (r *RedisService) EnqueueTask(queue string, to string) error {
 	}
 	return nil
 }
-
-// func handleSendEmailTask(c context.Context, t *asynq.Task) error {
-// 	fmt.Printf("Sending email to: %s\n")
-// 	return nil
-// }

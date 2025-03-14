@@ -15,14 +15,16 @@ type AWSService struct {
 	Client *cloudtrail.Client
 }
 
-func NewAWSService() (*AWSService, error) {
+func NewAWSService(accessKey, secretKey string) (*AWSService, error) {
+
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithRegion("us-east-1"),
+
 		config.WithCredentialsProvider(aws.NewCredentialsCache(
 			aws.CredentialsProviderFunc(func(ctx context.Context) (aws.Credentials, error) {
 				return aws.Credentials{
-					AccessKeyID:     "test",
-					SecretAccessKey: "test",
+					AccessKeyID:     accessKey,
+					SecretAccessKey: secretKey,
 					SessionToken:    "",
 					Source:          "HardcodedCredentials",
 				}, nil
@@ -60,7 +62,7 @@ func (a *AWSService) FetchLogs(ctx context.Context, startTimeStr, endTimeStr str
 	}
 	resp, err := a.Client.LookupEvents(ctx, input)
 	if err != nil {
-		fmt.Println("⚠️ CloudTrail service unavailable. Using mock data instead.")
+		fmt.Println("CloudTrail service unavailable. Using mock data instead.")
 		return createMockEvents(), nil
 	}
 	return resp.Events, nil
